@@ -62,7 +62,7 @@ public class DataConfig {
     public LocalContainerEntityManagerFactoryBean emf() {
         LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
         emf.setDataSource(dataSource());
-        emf.setPersistenceUnitName("todolist");
+        emf.setPersistenceUnitName("planner");
         emf.setJpaVendorAdapter(jpaVendorAdapter());
         emf.setPackagesToScan("entity");
         return emf;

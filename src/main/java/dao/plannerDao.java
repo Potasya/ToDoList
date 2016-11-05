@@ -19,7 +19,7 @@ import java.util.List;
 @Repository
 public class PlannerDao {
 
-    @PersistenceContext(name = "todolist")
+    @PersistenceContext(name = "planner")
     private EntityManager entityManager;
 
 

@@ -1,10 +1,9 @@
 import config.RootConfig;
-import dao.TodolistDAO;
-import entity.Todolist;
+import dao.PlannerDao;
+import entity.Planner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
@@ -19,41 +18,50 @@ import java.util.List;
 public class TestRepository {
 
     @Autowired
-    private TodolistDAO dao;
+    private PlannerDao dao;
 
     @Test
     public void testFindAll() {
-        List<Todolist> list = dao.find(null);
-        for (Todolist e : list) {
-            System.out.println(e.getId() + ";" + e.getTodo() + ";" + e.isDone());
-        }
+        List<Planner> list = dao.find(null);
+        list.forEach(e ->
+                System.out.println(e.getId() + ";" + e.getItem() + ";" + e.isStatus())
+        );
         assert (list.size() != 0);
     }
 
     @Test
     public void testUnDone() {
-        List<Todolist> list = dao.find(false);
-        for (Todolist e : list) {
-            System.out.println(e.getId() + ";" + e.getTodo() + ";" + e.isDone());
-        }
-        assert (list.size() != 0);
+        List<Planner> l = dao.find(false);
+        l.forEach(e ->
+                System.out.println(e.getId() + ";" + e.getItem() + ";" + e.isStatus())
+        );
+        assert (l.size() != 0);
     }
 
     @Test
     public void testDone() {
-        List<Todolist> list = dao.find(true);
-        for (Todolist e : list) {
-            System.out.println(e.getId() + ";" + e.getTodo() + ";" + e.isDone());
-        }
-        assert (list.size() != 0);
+        List<Planner> l = dao.find(true);
+        l.forEach(e ->
+                System.out.println(e.getId() + ";" + e.getItem() + ";" + e.isStatus())
+        );
+        assert (l.size() != 0);
     }
 
     @Test
     public void testSave(){
-        Todolist todolist = new Todolist();
-        todolist.setTodo("test action");
-        todolist.setDone(true);
-        dao.save(todolist);
+        Planner planner = new Planner();
+        planner.setItem("test action");
+        planner.setStatus(false);
+        dao.save(planner);
 
+    }
+
+    @Test
+    public void testUpdate() {
+        Planner planner = new Planner();
+        planner.setId(7L);
+        planner.setItem("test action2");
+        planner.setStatus(false);
+        dao.update(planner);
     }
 }

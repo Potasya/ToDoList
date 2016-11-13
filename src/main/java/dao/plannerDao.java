@@ -35,14 +35,24 @@ public class PlannerDao {
         return entityManager.createQuery(cq).getResultList();
     }
 
-    @Transactional
-    public Planner save(Planner planner) {
-        entityManager.persist(planner);
-        return planner;
+
+    public void merge(Planner planner) {
+        entityManager.merge(planner);
     }
 
-    @Transactional
-    public void update(Planner planner) {
-        entityManager.merge(planner);
+    public void updateStatus(Long id){
+        Planner planner = entityManager.find(Planner.class, id);
+        if (planner!=null) {
+            planner.setStatus(true);
+            entityManager.merge(planner);
+        }
+    }
+
+
+    public void delete(Long id) {
+        Planner planner = entityManager.find(Planner.class, id);
+        if (planner!=null) {
+            entityManager.remove(planner);
+        }
     }
 }

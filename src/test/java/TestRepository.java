@@ -1,11 +1,11 @@
 import config.RootConfig;
-import dao.PlannerDao;
 import entity.Planner;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import service.PlannerService;
 
 import java.util.List;
 
@@ -18,11 +18,11 @@ import java.util.List;
 public class TestRepository {
 
     @Autowired
-    private PlannerDao dao;
+    private PlannerService service;
 
     @Test
     public void testFindAll() {
-        List<Planner> list = dao.find(null);
+        List<Planner> list = service.find(null);
         list.forEach(e ->
                 System.out.println(e.getId() + ";" + e.getItem() + ";" + e.isStatus())
         );
@@ -31,7 +31,7 @@ public class TestRepository {
 
     @Test
     public void testUnDone() {
-        List<Planner> l = dao.find(false);
+        List<Planner> l = service.find(false);
         l.forEach(e ->
                 System.out.println(e.getId() + ";" + e.getItem() + ";" + e.isStatus())
         );
@@ -40,7 +40,7 @@ public class TestRepository {
 
     @Test
     public void testDone() {
-        List<Planner> l = dao.find(true);
+        List<Planner> l = service.find(true);
         l.forEach(e ->
                 System.out.println(e.getId() + ";" + e.getItem() + ";" + e.isStatus())
         );
@@ -48,20 +48,16 @@ public class TestRepository {
     }
 
     @Test
-    public void testSave(){
+    public void testMerge() {
         Planner planner = new Planner();
-        planner.setItem("test action");
-        planner.setStatus(false);
-        dao.save(planner);
-
+        //planner.setId(10L);\
+        planner.setItem("new");
+        planner.setStatus(true);
+        service.createOrUpdate(planner);
     }
 
     @Test
-    public void testUpdate() {
-        Planner planner = new Planner();
-        planner.setId(7L);
-        planner.setItem("test action2");
-        planner.setStatus(false);
-        dao.update(planner);
+    public void testDelete(){
+        service.delete(8L);
     }
 }

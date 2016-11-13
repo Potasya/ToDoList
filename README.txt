@@ -1,1 +1,1 @@
-Скрипт создания таблицы находится в файле todolist.main.java.resources.create_table.sql
+Скрипт создания таблицы находится в файле todolist.src.main.java.resources.create_table.sql
